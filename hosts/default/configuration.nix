@@ -8,17 +8,22 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./main-user.nix
+      inputs.home-manager.nixosModules.default
       inputs.noctalia.nixosModules.default
       inputs.noctalia-greeter.nixosModules.default
     ];
-  # THINGS ONLY FOR VM
-  services.qemuGuest.enable = true;
-  services.spice-vdagentd.enable = true;
-  services.spice-webdavd.enable = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      "stshalson" = import ./home.nix;
+    };
+  };
 
   # use experimental features - nix-command and flakes
   # add noctalia cachix
@@ -70,14 +75,13 @@
   # enable fish shell module
   programs.fish.enable = true;
 
+  # provides the standard dynamic linker path so prebuilt dynamically-linked
+  # binaries (e.g. nvim-treesitter's tree-sitter CLI/parsers) can run
+  programs.nix-ld.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users."stshalson" = {
-    isNormalUser = true;
-    description = "stshalson";
-    extraGroups = [ "networkmanager" "wheel" ];
-    shell = pkgs.fish;
-    packages = with pkgs; [];
-  };
+  main-user.enable = true;
+  main-user.userName = "stshalson";
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -153,8 +157,6 @@
     Host *
       IdentityAgent ~/.bitwarden-ssh-agent.sock
   '';
-  home.sessionVariables.SSH_AUTH_SOCK =
-    "${config.home.homeDirectory}/.bitwarden-ssh-agent.sock";
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
