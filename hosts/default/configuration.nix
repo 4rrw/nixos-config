@@ -2,17 +2,22 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./main-user.nix
-      inputs.home-manager.nixosModules.default
-      inputs.noctalia.nixosModules.default
-      inputs.noctalia-greeter.nixosModules.default
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ../../modules/nixos/main-user.nix
+    inputs.home-manager.nixosModules.default
+    inputs.noctalia.nixosModules.default
+    inputs.noctalia-greeter.nixosModules.default
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -20,6 +25,9 @@
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
+    # Without this a single pre-existing file aborts the ENTIRE activation --
+    # no packages, no configs, nothing. Move it aside and carry on instead.
+    backupFileExtension = "hm-bak";
     users = {
       "stshalson" = import ./home.nix;
     };
@@ -28,7 +36,10 @@
   # use experimental features - nix-command and flakes
   # add noctalia cachix
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     extra-substituters = [ "https://noctalia.cachix.org" ];
     extra-trusted-public-keys = [
       "noctalia.cachix.org-1:pCOR47nnMeo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
@@ -89,9 +100,14 @@
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
-    neovim
-    ghostty
-    chezmoi
+    rustc
+    cargo
+    gcc
+    uv
+    lua
+    nodejs
+    #---
+    gnumake
     git
     brave
     nemo
@@ -99,19 +115,9 @@
     starship
     eza
     fastfetch
-    tmux-sessionizer
-    tmux
     bitwarden-desktop
-    fzf
-    ripgrep
-    rustup
-    uv
-    nodejs
-    lua
-    gcc
     btop
     docker
-    lazygit
     mpv
     localsend
     flameshot
@@ -120,6 +126,8 @@
     xournalpp
     p7zip
     unzip
+    #
+    spotify
   ];
 
   # hyprland module

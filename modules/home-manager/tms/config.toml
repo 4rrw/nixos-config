@@ -1,0 +1,5 @@
+bookmarks = ["~/.config/nixos", "~/.config/nvim"]
+
+[[search_dirs]]
+path = "~/projects"
+depth = 3
