@@ -19,3 +19,29 @@
 [theme.templates]
 enable_builtin_templates = true
 builtin_ids = ["ghostty", "gtk3", "gtk4", "hyprland"]
+
+[shell]
+# noctalia's own polkit agent, so nothing separate has to be autostarted.
+polkit_agent = true
+
+[shell.screenshot]
+directory = "~/Pictures/Screenshots"
+save_to_file = true
+copy_to_clipboard = true
+# Freezes the screen while selecting and keeps the pointer out of the capture.
+freeze_screen = true
+show_cursor = false
+remember_last_region = true
+# Every capture opens in satty to annotate; Enter there saves and copies.
+pipe_to_command = true
+pipe_command = "satty -f - -o ~/Pictures/Screenshots/annotated-%Y%m%d_%H%M%S.png --copy-command wl-copy --actions-on-enter save-to-clipboard"
+
+[idle.behavior.lock]
+timeout = 300
+action = "lock"
+enabled = true
+
+[idle.behavior.screen-off]
+timeout = 420
+action = "screen_off"
+enabled = true

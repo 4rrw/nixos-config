@@ -24,7 +24,6 @@ require("hypr.monitors")
 require("hypr.input")
 require("hypr.tiling")
 require("hypr.bindings")
-require("hypr.screenshot")
 require("hypr.windows")
 require("hypr.autostart")
 

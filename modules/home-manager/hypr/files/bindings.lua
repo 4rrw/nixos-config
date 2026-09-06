@@ -15,7 +15,7 @@ h.bind("SUPER + SHIFT + L", "Swap window to the right", hl.dsp.window.swap({ dir
 h.bind_launch("SUPER + RETURN", "Terminal", "ghostty")
 h.bind_launch("SUPER + B", "Browser", "brave")
 h.bind_launch("SUPER + SHIFT + B", "Browser (private)", "brave --incognito")
-h.bind_launch("SUPER + E", "File manager", "nemo")
+h.bind_launch("SUPER + E", "File manager", "nautilus")
 h.bind_launch("SUPER + O", "Obsidian", "obsidian -disable-gpu --enable-wayland-ime")
 h.bind_launch("SUPER + N", "Sessionizer", "ghostty -e tms")
 
@@ -25,6 +25,12 @@ h.bind("SUPER + S", "Control center", "noctalia msg panel-toggle control-center"
 h.bind("SUPER + COMMA", "Settings", "noctalia msg settings-toggle")
 h.bind("ALT + TAB", "Window switcher", "noctalia msg window-switcher")
 h.bind("SUPER + ESCAPE", "Power menu", "noctalia msg panel-toggle session")
+
+-- Capture. noctalia does the freeze, region overlay, save and clipboard copy
+-- itself; satty is wired up as its pipe_command in config.toml.
+h.bind("PRINT", "Screenshot", "noctalia msg screenshot-region")
+h.bind("SHIFT + PRINT", "Screenshot (whole monitor)", "noctalia msg screenshot-fullscreen")
+h.bind("SUPER + PRINT", "Colour picker", "pkill hyprpicker || hyprpicker -a")
 
 -- Media keys. repeating = held-key repeats, locked = works on lock screen.
 h.bind("XF86AudioRaiseVolume", "Volume up", "noctalia msg volume-up", { repeating = true, locked = true })

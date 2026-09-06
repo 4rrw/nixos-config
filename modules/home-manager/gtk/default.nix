@@ -8,7 +8,7 @@
     enable = true;
 
     # Without this only `hicolor` exists, which carries no real icons -- that is
-    # why nemo came up blank. Adwaita's symbolic icons follow dark/light on their
+    # why the file manager came up blank. Adwaita's symbolic icons follow dark/light on their
     # own, which a fixed pair like Papirus-Dark would not.
     iconTheme = {
       package = pkgs.adwaita-icon-theme;

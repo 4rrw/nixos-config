@@ -6,14 +6,13 @@
     ./tmux
     ./neovim
     ./lazygit
+    ./loupe
     ./ghostty
     ./git
     ./gtk
     ./fish
     ./hypr
-    ./idle
     ./noctalia
-    ./screenshot
     ./tms
   ];
 

@@ -5,6 +5,7 @@
 {
   imports = [
     ../../modules/nixos/main-user.nix
+    ../../modules/nixos/nautilus.nix
     inputs.home-manager.nixosModules.default
     inputs.noctalia.nixosModules.default
     inputs.noctalia-greeter.nixosModules.default
@@ -74,7 +75,6 @@
     gnumake
     git
     brave
-    nemo
     claude-code
     starship
     eza
@@ -90,11 +90,9 @@
     p7zip
     unzip
     alsa-utils # for debugging audio routing
-    file-roller # nemo shells out to this to extract archives
-    nemo-fileroller # and this puts the entries in nemo's menu
-    ffmpegthumbnailer # video thumbnails in nemo
     xdg-user-dirs # creates and maintains ~/Pictures and friends
-    hyprpolkitagent # started from autostart.lua
+    satty # noctalia pipes screenshots here to annotate them
+    hyprpicker # the SUPER+PRINT colour picker; noctalia has no equivalent
     #
     spotify
   ];
@@ -134,12 +132,11 @@
   services.fwupd.enable = true;
   zramSwap.enable = true;
 
-  # gvfs gives nemo its Devices and Network tabs, udisks2 lets it mount.
-  # No automounter on purpose -- click the disk in nemo, or `udisksctl mount -b`.
-  services.gvfs.enable = true;
+  # Mounts removable media. No automounter on purpose -- click the disk in the
+  # file manager, or `udisksctl mount -b`. gvfs lives in nautilus.nix.
   services.udisks2.enable = true;
 
-  # mDNS, so SMB/NFS hosts turn up in nemo by name. Opens UDP 5353.
+  # mDNS, so SMB/NFS hosts turn up in the file manager by name. Opens UDP 5353.
   services.avahi = {
     enable = true;
     nssmdns4 = true;
