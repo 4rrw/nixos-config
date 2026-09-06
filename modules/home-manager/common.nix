@@ -11,6 +11,7 @@
     ./gtk
     ./fish
     ./hypr
+    ./idle
     ./noctalia
     ./screenshot
     ./tms

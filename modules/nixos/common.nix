@@ -90,6 +90,11 @@
     p7zip
     unzip
     alsa-utils # for debugging audio routing
+    file-roller # nemo shells out to this to extract archives
+    nemo-fileroller # and this puts the entries in nemo's menu
+    ffmpegthumbnailer # video thumbnails in nemo
+    xdg-user-dirs # creates and maintains ~/Pictures and friends
+    hyprpolkitagent # started from autostart.lua
     #
     spotify
   ];
@@ -113,6 +118,21 @@
       "node.stream.restore-target" = false;
     };
   };
+
+  # ghostty.conf asks for Iosevka Nerd Font Mono; without it ghostty falls back
+  # to proportional DejaVu Sans and every Nerd Font glyph renders as tofu.
+  fonts.packages = [ pkgs.nerd-fonts.iosevka ];
+
+  # Lets pipewire take realtime priority instead of crackling under load.
+  security.rtkit.enable = true;
+
+  # A Secret Service for Brave's passwords; the PAM line unlocks it at login.
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.greetd.enableGnomeKeyring = true;
+
+  services.printing.enable = true;
+  services.fwupd.enable = true;
+  zramSwap.enable = true;
 
   # gvfs gives nemo its Devices and Network tabs, udisks2 lets it mount.
   # No automounter on purpose -- click the disk in nemo, or `udisksctl mount -b`.

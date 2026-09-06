@@ -12,7 +12,6 @@ in
     "hypr/bindings.lua" = link "bindings.lua";
     "hypr/helpers.lua" = link "helpers.lua";
     "hypr/hyprland.lua" = link "hyprland.lua";
-    "hypr/hyprsunset.conf" = link "hyprsunset.conf";
     "hypr/input.lua" = link "input.lua";
     "hypr/looknfeel.lua" = link "looknfeel.lua";
     "hypr/monitors.lua" = link "monitors.lua";
