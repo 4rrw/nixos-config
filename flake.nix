@@ -25,8 +25,7 @@
         };
     in
     {
-      # The attribute name is what nixos-rebuild takes after the '#', and it
-      # defaults to the machine's hostname when you leave the '#' off.
+      # The name after '#' in nixos-rebuild; defaults to the hostname if you omit it.
       nixosConfigurations = {
         nixos = mkHost ./hosts/default/configuration.nix;
         konkuter = mkHost ./hosts/konkuter/configuration.nix;

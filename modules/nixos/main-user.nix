@@ -18,9 +18,7 @@ in
     users.users.${cfg.userName} = {
       isNormalUser = true;
       description = "main-user";
-      # wheel = sudo, networkmanager = manage connections without root.
-      # Dropped accidentally in 7c4ab80; without wheel there is no way to
-      # run nixos-rebuild at all.
+      # wheel is sudo -- dropping it locks you out of nixos-rebuild entirely.
       extraGroups = [
         "networkmanager"
         "wheel"

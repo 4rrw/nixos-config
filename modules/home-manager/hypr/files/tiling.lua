@@ -11,6 +11,11 @@ bind("SUPER + W", "Close window", hl.dsp.window.close())
 bind("SUPER + P", "Pseudo window", hl.dsp.window.pseudo())
 bind("SUPER + T", "Toggle window floating/tiling", hl.dsp.window.float({ action = "toggle" }))
 bind("SUPER + F", "Full screen", hl.dsp.window.fullscreen({ mode = "fullscreen" }))
+
+-- Per-window override of decoration.active_opacity; `value` has to be a string
+-- or number here, a boolean is rejected. Only touches the alpha hyprland
+-- applies, so ghostty stays translucent on its own.
+bind("SUPER + BACKSPACE", "Toggle window transparency", hl.dsp.window.set_prop({ prop = "opaque", value = "toggle" }))
 bind("SUPER + ALT + F", "Full width", hl.dsp.window.fullscreen({ mode = "maximized" }))
 
 -- Focus by arrow key; vim keys in bindings.lua.
