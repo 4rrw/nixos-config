@@ -19,10 +19,3 @@ hl.layer_rule({
   blur = true,
   blur_popups = true,
 })
-
--- Bitwarden is autostarted for the SSH agent, so its window is a side effect --
--- park it out of the way; `silent` keeps focus where it is.
-hl.window_rule({
-  match = { class = "^bitwarden$" },
-  workspace = "special:tray silent",
-})
