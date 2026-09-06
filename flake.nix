@@ -3,11 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
-
     noctalia.url = "github:noctalia-dev/noctalia";
-
     noctalia-greeter.url = "github:noctalia-dev/noctalia-greeter";
-
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,21 +15,21 @@
     inputs@{ self, nixpkgs, ... }:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+
+      mkHost =
+        configuration:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs; };
+          modules = [ configuration ];
+        };
     in
     {
-      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/default/configuration.nix
-          inputs.home-manager.nixosModules.default
-          # home-manager.nixosModules.home-manager
-          # {
-          #   home-manager.useGlobalPkgs = true;
-          #   home-manager.useUserPackages = true;
-          #   home-manager.users.stshalson = import ./home.nix;
-          # }
-        ];
+      # The attribute name is what nixos-rebuild takes after the '#', and it
+      # defaults to the machine's hostname when you leave the '#' off.
+      nixosConfigurations = {
+        nixos = mkHost ./hosts/default/configuration.nix;
+        konkuter = mkHost ./hosts/konkuter/configuration.nix;
       };
     };
 }

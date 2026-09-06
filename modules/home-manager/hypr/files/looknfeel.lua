@@ -45,8 +45,5 @@ hl.config({
 	},
 })
 
--- speed is a duration in deciseconds: LOWER IS FASTER. Hyprland's default
--- global is 10. Every other leaf inherits from global unless it overrides,
--- and none here do.
 hl.config({ animations = { enabled = true } })
-hl.animation({ leaf = "global", enabled = true, speed = 5, bezier = "default" })
+hl.animation({ leaf = "global", enabled = true, speed = 3, bezier = "default" })

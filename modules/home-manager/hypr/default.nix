@@ -1,15 +1,12 @@
 { config, ... }:
 let
-  # Absolute STRING on purpose. A nix path literal (./files) would be copied
-  # into the store at eval time, which is exactly what this avoids.
-  hyprFiles = "${config.home.homeDirectory}/.config/nixos/modules/home-manager/hypr/files";
-  link = name: { source = config.lib.file.mkOutOfStoreSymlink "${hyprFiles}/${name}"; };
+  repoLink = import ../repo-link.nix { inherit config; };
+  link = name: repoLink "hypr/files/${name}";
 in
 {
-  # Symlinked out of the store to the live repo, so editing a .lua file takes
-  # effect on `hyprctl reload` with no rebuild. The cost: these links resolve
-  # outside nix's control, so the repo must exist at the path above or
-  # hyprland has no config at all.
+  # Symlinked out of the store to the live repo (see repo-link.nix), so editing
+  # a .lua file takes effect on `hyprctl reload` with no rebuild. Every hypr
+  # config file is linked, so a missing repo leaves hyprland with none at all.
   #
   # Everything hyprland-related lives in the .lua files, including the
   # per-host branches (they read /etc/hostname via helpers.hostname()).

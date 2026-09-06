@@ -1,0 +1,16 @@
+# Base git config. Plain app-native INI -- nothing Nix-specific, so this file
+# works unchanged on a non-NixOS machine.
+#
+# Linked to ~/.gitconfig rather than ~/.config/git/config because git does not
+# merge the two: if ~/.gitconfig exists at all, the XDG file is ignored
+# outright. ~/.gitconfig is also where `git config --global ...` writes, and
+# since this link points at the repo such a write edits *this file* -- it will
+# show up in `git status`, so either commit it or revert it.
+[user]
+	name = 4rrw
+	email = stshalsonixx@gmail.com
+
+# Same path on every host, so it belongs here rather than in machine-local
+# state. Git refuses to operate on a repo owned by another user without it.
+[safe]
+	directory = /home/stshalson/.config/nixos

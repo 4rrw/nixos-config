@@ -1,0 +1,21 @@
+# Noctalia's base config layer. Plain app-native TOML -- nothing here is
+# Nix-specific, so this file works unchanged on a non-NixOS machine.
+#
+# This is only the base layer. The GUI writes its own overrides to
+# ~/.local/state/noctalia/settings.toml, which loads last and wins at runtime.
+# To make a GUI change permanent, copy the key here and then delete it from
+# settings.toml -- while both hold the same value nothing changes, but a stale
+# override there will silently shadow every later edit to that key here.
+#
+# Apply after editing:     noctalia msg config-reload
+# Validate after editing:  noctalia config validate
+# See the effective merge:  noctalia config export
+
+# Templates render noctalia's current colors into other programs' configs.
+# Two of these are load-bearing rather than cosmetic:
+#   hyprland -> writes ~/.config/hypr/noctalia.lua, which hypr/files/hyprland.lua
+#               requires unconditionally
+#   ghostty  -> writes the theme that ghostty.conf's `theme = noctalia` names
+[theme.templates]
+enable_builtin_templates = true
+builtin_ids = ["ghostty", "gtk3", "gtk4", "hyprland"]

@@ -1,34 +1,25 @@
-if status is-interactive
-    starship init fish | source
-    # Commands to run in interactive sessions can go here
-end
-
 set -g fish_greeting
 
-set PATH $PATH /home/stshalson/.local/bin
-
-# nvim installed via bob
-fish_add_path ~/.local/share/bob/nvim-bin
+# -g, not the universal scope fish_add_path defaults to: universal variables
+# live in fish_variables, which this module deliberately does not manage.
+fish_add_path -g $HOME/.local/bin
 
 alias vim "nvim"
 alias ls "eza"
-alias cd "zoxide"
-# set PATH "$PATH":"$HOME/.local/scripts/"
 
-# bitwarden ssh agent
-set -gx SSH_AUTH_SOCK "$HOME/.bitwarden-ssh-agent.sock"
-# Run when changing directory
-function cd
-    builtin cd $argv
+if status is-interactive
+    starship init fish | source
+
+    # Makes `cd` zoxide's smart jump -- it still behaves like plain cd for real
+    # paths -- and adds `cdi` for the interactive picker.
+    zoxide init fish --cmd cd | source
+
+    # Activate a project's .venv on directory change. A PWD handler rather than
+    # a `cd` wrapper, so it also fires for zoxide jumps, prevd/nextd, and any
+    # other way the directory moves. The bare call covers shell startup, which
+    # is not a change: new tmux panes and terminals begin inside the project.
+    function __auto_venv --on-variable PWD
+        auto_venv
+    end
     auto_venv
 end
-
-# Run at shell startup (will work in tmux sessions)
-if set -q TMUX
-    auto_venv
-end
-
-#if status is-interactive
-# and not set -q TMUX
-#    exec tmux
-# end

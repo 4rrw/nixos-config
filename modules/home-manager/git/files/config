@@ -1,0 +1,19 @@
+# Base git config. Plain app-native INI -- nothing Nix-specific, so this file
+# works unchanged on a non-NixOS machine.
+#
+# Git reads this *and* ~/.gitconfig, in that order, so ~/.gitconfig wins on any
+# key set in both. That file stays unmanaged on purpose: it is where
+# `git config --global ...` writes and where machine-local keys land. Same trade
+# as noctalia's settings.toml -- a stray `git config --global user.email ...`
+# silently shadows the value here until you remove it from ~/.gitconfig.
+#
+# (`git config --global --list` shows only ~/.gitconfig, because --global
+# selects one file. Use `git config --list --show-origin` to see the real merge.)
+[user]
+	name = 4rrw
+	email = stshalsonixx@gmail.com
+
+# Same path on every host, so it belongs here rather than in machine-local
+# state. Git refuses to operate on a repo owned by another user without it.
+[safe]
+	directory = /home/stshalson/.config/nixos
