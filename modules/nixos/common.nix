@@ -84,7 +84,6 @@
     docker
     mpv
     localsend
-    flameshot
     tldr
     zoxide
     xournalpp

@@ -12,6 +12,7 @@
     ./fish
     ./hypr
     ./noctalia
+    ./screenshot
     ./tms
   ];
 
