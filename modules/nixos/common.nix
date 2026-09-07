@@ -56,8 +56,30 @@
 
   programs.fish.enable = true;
 
+  # GAMING
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+  services.xserver.videoDrivers = ["amdgpu"];
+
+
   # Gives prebuilt dynamic binaries, like nvim-treesitter's parsers, a linker to find.
   programs.nix-ld.enable = true;
+
+  # manylinux Python wheels link these by soname and expect the distro to supply them.
+  # opencv-python needs every one: glib and libGL for the core module, the X11 set for
+  # its bundled Qt platform plugin.
+  # TODO: use things like this in project flake, not system wide
+  programs.nix-ld.libraries = with pkgs; [
+    glib
+    libGL
+    xorg.libICE
+    xorg.libSM
+    xorg.libX11
+    xorg.libXext
+    xorg.libxcb
+  ];
 
   main-user.enable = true;
   main-user.userName = "stshalson";
