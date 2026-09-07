@@ -6,6 +6,7 @@
   imports = [
     ../../modules/nixos/main-user.nix
     ../../modules/nixos/nautilus.nix
+    ../../modules/nixos/gaming.nix
     inputs.home-manager.nixosModules.default
     inputs.noctalia.nixosModules.default
     inputs.noctalia-greeter.nixosModules.default
@@ -55,13 +56,6 @@
   console.keyMap = "pl2";
 
   programs.fish.enable = true;
-
-  # GAMING
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
-  services.xserver.videoDrivers = ["amdgpu"];
 
   # Gives prebuilt dynamic binaries, like nvim-treesitter's parsers, a linker to find.
   programs.nix-ld.enable = true;
