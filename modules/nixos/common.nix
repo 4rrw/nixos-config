@@ -63,11 +63,6 @@
   };
   services.xserver.videoDrivers = ["amdgpu"];
 
-  # NH
-  environment.sessionVariables = {
-    NH_FLAKE = "/home/stshalson/.config/nixos";
-  };
-
   # Gives prebuilt dynamic binaries, like nvim-treesitter's parsers, a linker to find.
   programs.nix-ld.enable = true;
 
@@ -141,6 +136,8 @@
   };
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  environment.sessionVariables.NH_FLAKE = "/home/stshalson/.config/nixos";
+
 
   programs.noctalia = {
     enable = true;
