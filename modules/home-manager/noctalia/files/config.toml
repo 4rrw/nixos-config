@@ -18,11 +18,24 @@
 #   ghostty  -> writes the theme that ghostty.conf's `theme = noctalia` names
 [theme.templates]
 enable_builtin_templates = true
-builtin_ids = ["ghostty", "gtk3", "gtk4", "hyprland"]
+builtin_ids = ["btop", "ghostty", "gtk3", "gtk4", "hyprland", "qt", "starship"]
+community_ids = ["claude-code", "brave"]
+
+[theme]
+source = "wallpaper"
+wallpaper_scheme = "m3-content"
+mode = "dark"
+builtin = "Kanagawa"
+community_palette = "Zenbones"
 
 [shell]
 # noctalia's own polkit agent, so nothing separate has to be autostarted.
 polkit_agent = true
+clipboard_enabled = false
+font_family = "Unifont"
+
+[shell.panel]
+transparency_mode = "glass"
 
 [shell.screenshot]
 directory = "~/Pictures/Screenshots"
@@ -36,6 +49,46 @@ remember_last_region = true
 pipe_to_command = true
 pipe_command = "satty -f - -o ~/Pictures/Screenshots/annotated-%Y%m%d_%H%M%S.png --copy-command wl-copy --actions-on-enter save-to-clipboard"
 
+# margin_ends keeps the bar clear of the TV's overscan, matching the wide
+# gaps_out in hypr/files/looknfeel.lua.
+[bar.default]
+layer = "overlay"
+background_opacity = 0.5
+margin_ends = 500
+widget_spacing = 12
+start = ["launcher", "wallpaper", "workspaces", "media"]
+center = ["clock", "weather"]
+end = [
+    "cpu",
+    "ram",
+    "tray",
+    "notifications",
+    "network",
+    "bluetooth",
+    "volume",
+    "brightness",
+    "battery",
+    "control-center",
+    "session",
+]
+
+[notification]
+position = "top_center"
+background_opacity = 0.3
+
+[nightlight]
+enabled = true
+
+# Weather widget lookup.
+[location]
+address = "Kraków"
+
+# The wallpaper itself stays in settings.toml; noctalia rewrites it on every
+# change, so pinning it here would just be overridden again.
+[wallpaper]
+directory = "/home/stshalson/Pictures/Wallpapers"
+transition = ["stripes"]
+
 [idle.behavior.lock]
 timeout = 300
 action = "lock"
@@ -45,3 +98,52 @@ enabled = true
 timeout = 420
 action = "screen_off"
 enabled = true
+
+[desktop_widgets]
+schema_version = 2
+widget_order = []
+
+[desktop_widgets.widget]
+
+[desktop_widgets.grid]
+cell_size = 16
+major_interval = 4
+visible = true
+
+[lockscreen_widgets]
+enabled = false
+schema_version = 2
+widget_order = ["lockscreen-login-box@HDMI-A-2"]
+
+[lockscreen_widgets.grid]
+cell_size = 16
+major_interval = 4
+visible = true
+
+# Dragged into place in the GUI, hence the pixel geometry.
+[lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-2"]
+type = "login_box"
+output = "HDMI-A-2"
+box_height = 196.0
+box_width = 810.0
+cx = 1536.0
+cy = 1546.0
+placement_height = 1728.0
+placement_width = 3072.0
+rotation = 0.0
+
+[lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-2".settings]
+layout = "regular"
+background_color = "surface_variant"
+background_opacity = 0.88
+background_radius = 12.0
+input_opacity = 1.0
+input_radius = 6.0
+center_password_text = false
+show_caps_lock = true
+show_keyboard_layout = true
+show_login_button = true
+show_media = true
+show_session_buttons = true
+show_unlock_hint = true
+show_weather = true
