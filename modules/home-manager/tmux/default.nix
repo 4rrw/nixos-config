@@ -10,6 +10,7 @@
     focusEvents = true;
     terminal = "tmux-256color";
     sensibleOnTop = true;
+    secureSocket = false;
     plugins = with pkgs.tmuxPlugins; [
       yank
       gruvbox

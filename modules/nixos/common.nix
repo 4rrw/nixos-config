@@ -71,7 +71,7 @@
     uv
     lua
     nodejs
-    #---
+    # --
     gnumake
     git
     brave
@@ -89,18 +89,23 @@
     xournalpp
     p7zip
     unzip
+    gparted
     alsa-utils # for debugging audio routing
     xdg-user-dirs # creates and maintains ~/Pictures and friends
     satty # noctalia pipes screenshots here to annotate them
     hyprpicker # the SUPER+PRINT colour picker; noctalia has no equivalent
+    bibata-cursors # only here because a theme has to be a store path; hypr/looknfeel.lua picks it
     #
     spotify
+    ncspot
   ];
 
   programs.hyprland = {
     enable = true;
     withUWSM = true;
   };
+
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   programs.noctalia = {
     enable = true;

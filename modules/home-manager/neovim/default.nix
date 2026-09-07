@@ -13,6 +13,7 @@ in
     fzf
     ripgrep
     luaPackages.tree-sitter-cli
+    fd
 
     # nix language support
     nil
