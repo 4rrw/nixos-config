@@ -63,6 +63,10 @@
   };
   services.xserver.videoDrivers = ["amdgpu"];
 
+  # NH
+  environment.sessionVariables = {
+    NH_FLAKE = "/home/stshalson/.config/nixos";
+  };
 
   # Gives prebuilt dynamic binaries, like nvim-treesitter's parsers, a linker to find.
   programs.nix-ld.enable = true;
@@ -74,11 +78,11 @@
   programs.nix-ld.libraries = with pkgs; [
     glib
     libGL
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
-    xorg.libXext
-    xorg.libxcb
+    libice
+    libsm
+    libx11
+    libxext
+    libxcb
   ];
 
   main-user.enable = true;
@@ -87,23 +91,29 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
+    # dev stuff
     rustc
     cargo
     gcc
     uv
     lua
     nodejs
-    # --
-    gnumake
     git
+    pre-commit
+    gnumake
+    docker
+    # fancy nix tool
+    nh
+    # larp tools
+    fastfetch
+    btop
+    # -- 
+    ffmpeg-full
     brave
     claude-code
     starship
     eza
-    fastfetch
     bitwarden-desktop
-    btop
-    docker
     mpv
     localsend
     tldr
@@ -120,6 +130,9 @@
     #
     spotify
     ncspot
+    # -- fonts
+    ubuntu-sans
+    roboto
   ];
 
   programs.hyprland = {
