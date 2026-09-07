@@ -22,4 +22,7 @@ in
 
   # Called from autostart.lua on konkuter; the 755 comes from the repo file itself.
   home.file."bin/hyprland-randomize-gaps.sh" = link "hyprland-randomize-gaps.sh";
+
+  # Bound to SUPER + SHIFT + G in bindings.lua.
+  home.file."bin/gaming-mode.sh" = link "gaming-mode.sh";
 }

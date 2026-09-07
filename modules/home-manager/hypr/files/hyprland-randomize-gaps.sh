@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Randomize the outer gaps to keep static content off the OLED edges.
 #

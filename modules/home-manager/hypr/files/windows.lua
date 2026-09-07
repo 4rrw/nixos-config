@@ -36,3 +36,12 @@ hl.window_rule({
 	center = true,
 	opaque = true,
 })
+
+-- Floating so the window keeps the exact size given to gamescope's -W/-H;
+-- tiled it would be shrunk to fit looknfeel.lua's gaps.
+hl.window_rule({
+	match = { class = "gamescope" },
+	float = true,
+	center = true,
+	opaque = true,
+})
