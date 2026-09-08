@@ -14,7 +14,6 @@
     ./hypr
     ./noctalia
     ./tms
-    ./webapps
   ];
 
   home.username = "stshalson";

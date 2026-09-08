@@ -122,6 +122,10 @@
     # -- fonts
     ubuntu-sans
     roboto
+    # communicators (1.5GB of electron fat asses)
+    slack
+    mattermost-desktop
+    discord
   ];
 
   programs.hyprland = {
