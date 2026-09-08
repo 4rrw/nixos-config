@@ -96,7 +96,10 @@
     # larp tools
     fastfetch
     btop
-    # -- 
+    # actual tools
+    ncdu
+    lf
+    # ---
     ffmpeg-full
     brave
     claude-code

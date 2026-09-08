@@ -12,7 +12,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # The ntfs driver below needs 7.1 or newer.
+  # The ntfs driver below needs kernel 7.1 or newer
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # The hypr lua files branch on this, so renaming changes monitors, gaps and layout.
