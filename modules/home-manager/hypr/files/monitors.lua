@@ -10,8 +10,10 @@ if h.hostname() == "konkuter" then
 		-- mode = "2560x1440@120",
 		position = "auto",
 		scale = 1.25,
-		bitdepth = 8,
-		cm = "auto",
+		bitdepth = 10,
+		cm = "hdr",
+		sdrbrightness = 5,
+		sdrsaturation = 0.98,
 	})
 	hl.config({ xwayland = { force_zero_scaling = true } })
 else

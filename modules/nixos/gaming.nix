@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   # enable opengl
   hardware.graphics = {
@@ -11,6 +11,9 @@
   # enable steam, gamescope, mangohud and gamemode
   programs.steam.enable = true;
   programs.steam.gamescopeSession.enable = true;
+  programs.steam.extraCompatPackages = [
+    inputs.proton-ge.packages.${pkgs.system}.default
+  ];
   environment.systemPackages = with pkgs; [
     mangohud
     protonup-ng

@@ -37,6 +37,7 @@ if [ -f "$saved" ]; then
     } <"$saved"
     apply "$wallpaper" "$border" "$scale"
     rm -f "$saved"
+    noctalia msg bar-auto-hide-set off >/dev/null
 else
     mkdir -p "$dir"
     {
@@ -46,4 +47,5 @@ else
     } >"$saved"
     [ -f "$black" ] || ffmpeg -y -loglevel error -f lavfi -i "color=c=black:s=$res" -frames:v 1 "$black"
     apply "$black" 0 1
+    noctalia msg bar-auto-hide-set on >/dev/null
 fi

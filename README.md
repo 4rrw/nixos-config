@@ -12,8 +12,11 @@ XWayland apps aren't scaled explicitly.
 For now, start games in Steam with:
 
 ```
-gamescope -W 3840 -H 1645 -b -r 120 --mangoapp -- gamemoderun %command%
+gamescope -W 3840 -H 1645 --hdr-enabled --backend wayland -b -r 120 --mangoapp -- gamemoderun %command%
 ```
+
+`--hdr-enabled` and `--mangoapp` is optional
+without `--backend wayland` <https://github.com/ValveSoftware/gamescope/issues/163>
 
 ## TODO
 

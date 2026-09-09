@@ -22,6 +22,7 @@ in
       extraGroups = [
         "networkmanager"
         "wheel"
+        "docker"
       ];
       initialPassword = "12345";
       shell = pkgs.fish;

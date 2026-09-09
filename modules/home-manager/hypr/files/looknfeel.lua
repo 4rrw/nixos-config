@@ -50,3 +50,4 @@ hl.env("XCURSOR_SIZE", "24")
 
 hl.config({ animations = { enabled = true } })
 hl.animation({ leaf = "global", enabled = true, speed = 3, bezier = "default" })
+hl.animation({ leaf = "workspaces", enabled = false })

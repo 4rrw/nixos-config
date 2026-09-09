@@ -7,6 +7,7 @@
     ../../modules/nixos/main-user.nix
     ../../modules/nixos/nautilus.nix
     ../../modules/nixos/gaming.nix
+    ../../modules/nixos/openvpn.nix
     inputs.home-manager.nixosModules.default
     inputs.noctalia.nixosModules.default
     inputs.noctalia-greeter.nixosModules.default
@@ -60,6 +61,9 @@
   # Gives prebuilt dynamic binaries, like nvim-treesitter's parsers, a linker to find.
   programs.nix-ld.enable = true;
 
+  # DOCKER
+  virtualisation.docker.enable = true;
+
   # manylinux Python wheels link these by soname and expect the distro to supply them.
   # opencv-python needs every one: glib and libGL for the core module, the X11 set for
   # its bundled Qt platform plugin.
@@ -90,7 +94,7 @@
     git
     pre-commit
     gnumake
-    docker
+    claude-code
     # fancy nix tool
     nh
     # larp tools
@@ -99,32 +103,35 @@
     # actual tools
     ncdu
     lf
-    # ---
-    ffmpeg-full
-    brave
-    claude-code
-    starship
     eza
-    bitwarden-desktop
-    mpv
-    localsend
     tldr
     zoxide
-    xournalpp
     p7zip
     unzip
-    gparted
-    alsa-utils # for debugging audio routing
+    # network
+    networkmanager-openvpn
+    # shell
+    zenity # dialog boxes
+    starship
     xdg-user-dirs # creates and maintains ~/Pictures and friends
     satty # noctalia pipes screenshots here to annotate them
     hyprpicker # the SUPER+PRINT colour picker; noctalia has no equivalent
     bibata-cursors # only here because a theme has to be a store path; hypr/looknfeel.lua picks it
-    #
+    ubuntu-sans # font
+    roboto # font
+    # apps
+    brave
+    bitwarden-desktop
+    mpv
+    localsend
+    xournalpp
+    gparted
+    spicetify-cli
     spotify
     ncspot
-    # -- fonts
-    ubuntu-sans
-    roboto
+    # other
+    ffmpeg-full
+    alsa-utils # for debugging audio routing
     # communicators (1.5GB of electron fat asses)
     slack
     mattermost-desktop

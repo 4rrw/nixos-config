@@ -37,6 +37,18 @@ hl.window_rule({
 	opaque = true,
 })
 
+hl.window_rule({
+	match = { class = "bitwarden" },
+	float = true,
+	center = true,
+	size = { 1080, 920 },
+})
+
+hl.window_rule({
+	match = { class = "brave-browser" },
+	opaque = true,
+})
+
 -- Floating so the window keeps the exact size given to gamescope's -W/-H;
 -- tiled it would be shrunk to fit looknfeel.lua's gaps.
 hl.window_rule({
