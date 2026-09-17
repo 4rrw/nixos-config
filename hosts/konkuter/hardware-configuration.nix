@@ -18,7 +18,12 @@
       fsType = "ext4";
     };
 
-  boot.initrd.luks.devices."luks-73ed6349-5c0f-4c3b-97cd-e0f5294de605".device = "/dev/disk/by-uuid/73ed6349-5c0f-4c3b-97cd-e0f5294de605";
+  boot.initrd.luks.devices."luks-73ed6349-5c0f-4c3b-97cd-e0f5294de605" = {
+    device = "/dev/disk/by-uuid/73ed6349-5c0f-4c3b-97cd-e0f5294de605";
+    # performance tweaks
+    bypassWorkqueues = true; # Only recommended for NVME SSDs
+    allowDiscards = true; # Important for SSD lifespan if no hardcore security requirement
+  };
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/19F5-FA28";
