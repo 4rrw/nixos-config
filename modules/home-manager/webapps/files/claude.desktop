@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Claude
+Comment=claude.ai
+Exec=brave --app=https://claude.ai/new --class=claude
+Icon=@HOME@/.local/share/icons/hicolor/512x512/apps/claude.png
+Terminal=false
+StartupNotify=true
+StartupWMClass=claude
+Categories=Network;Chat;

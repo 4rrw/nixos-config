@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Linear
+Comment=linear.app
+Exec=brave --app=https://linear.app --class=linear
+Icon=@HOME@/.local/share/icons/hicolor/512x512/apps/linear.png
+Terminal=false
+StartupNotify=true
+StartupWMClass=linear
+Categories=Network;Chat;

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Excalidraw
+Comment=excalidraw.com
+Exec=brave --app=https://excalidraw.com --class=excalidraw
+Icon=@HOME@/.local/share/icons/hicolor/512x512/apps/excalidraw.png
+Terminal=false
+StartupNotify=true
+StartupWMClass=excalidraw
+Categories=Network;Chat;
