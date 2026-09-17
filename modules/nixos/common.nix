@@ -64,6 +64,18 @@
   # DOCKER
   virtualisation.docker.enable = true;
 
+  # BuildKit prunes to about 10 % of the disk by default, and it drops cache mounts before
+  # anything else. The tracker-api worker image caches 21 GB of torch wheels, so the default
+  # deletes them between builds and each build downloads torch again.
+  virtualisation.docker.daemon.settings = {
+    builder.gc = {
+      enabled = true;
+      reservedSpace = "120GB";
+      maxUsedSpace = "180GB";
+      minFreeSpace = "40GB";
+    };
+  };
+
   # manylinux Python wheels link these by soname and expect the distro to supply them.
   # opencv-python needs every one: glib and libGL for the core module, the X11 set for
   # its bundled Qt platform plugin.
@@ -76,6 +88,7 @@
     libx11
     libxext
     libxcb
+    icu
   ];
 
   main-user.enable = true;
@@ -108,17 +121,15 @@
     zoxide
     p7zip
     unzip
+    sshfs
     # network
     networkmanager-openvpn
     # shell
     zenity # dialog boxes
     starship
     xdg-user-dirs # creates and maintains ~/Pictures and friends
-    satty # noctalia pipes screenshots here to annotate them
     hyprpicker # the SUPER+PRINT colour picker; noctalia has no equivalent
     bibata-cursors # only here because a theme has to be a store path; hypr/looknfeel.lua picks it
-    ubuntu-sans # font
-    roboto # font
     # apps
     brave
     bitwarden-desktop
@@ -132,10 +143,8 @@
     # other
     ffmpeg-full
     alsa-utils # for debugging audio routing
-    # communicators (1.5GB of electron fat asses)
-    slack
-    mattermost-desktop
-    discord
+    # communicators
+    vesktop
   ];
 
   programs.hyprland = {
@@ -164,7 +173,12 @@
 
   # ghostty.conf asks for Iosevka Nerd Font Mono; without it ghostty falls back
   # to proportional DejaVu Sans and every Nerd Font glyph renders as tofu.
-  fonts.packages = [ pkgs.nerd-fonts.iosevka ];
+  fonts.packages = [ 
+    pkgs.nerd-fonts.iosevka
+    pkgs.ubuntu-sans
+    pkgs.roboto
+
+  ];
 
   # Lets pipewire take realtime priority instead of crackling under load.
   security.rtkit.enable = true;

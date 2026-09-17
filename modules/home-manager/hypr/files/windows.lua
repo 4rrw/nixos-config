@@ -38,6 +38,14 @@ hl.window_rule({
 })
 
 hl.window_rule({
+	match = { initial_class = "mpv" },
+	float = true,
+	center = true,
+	opaque = true,
+	size = { 1920, 1080 },
+})
+
+hl.window_rule({
 	match = { class = "bitwarden" },
 	float = true,
 	center = true,
@@ -47,6 +55,16 @@ hl.window_rule({
 hl.window_rule({
 	match = { class = "brave-browser" },
 	opaque = true,
+})
+
+-- The file picker every app reaches through the portal. It sets no title at all,
+-- so the class is the only thing to match on, and it asks for 1204x1192 and
+-- tiles, which on the 4K is most of a column.
+hl.window_rule({
+	match = { class = "^xdg-desktop-portal-gtk$" },
+	float = true,
+	center = true,
+	size = { 1100, 750 },
 })
 
 -- Floating so the window keeps the exact size given to gamescope's -W/-H;
