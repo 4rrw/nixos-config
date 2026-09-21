@@ -1,97 +1,117 @@
-# Noctalia's base config layer. Plain app-native TOML -- nothing here is
-# Nix-specific, so this file works unchanged on a non-NixOS machine.
-#
-# This is only the base layer. The GUI writes its own overrides to
-# ~/.local/state/noctalia/settings.toml, which loads last and wins at runtime.
-# To make a GUI change permanent, copy the key here and then delete it from
-# settings.toml -- while both hold the same value nothing changes, but a stale
-# override there will silently shadow every later edit to that key here.
-#
-# Apply after editing:     noctalia msg config-reload
-# Validate after editing:  noctalia config validate
-# See the effective merge:  noctalia config export
-
-# Templates render noctalia's current colors into other programs' configs.
-# Two of these are load-bearing rather than cosmetic:
-#   hyprland -> writes ~/.config/hypr/noctalia.lua, which hypr/files/hyprland.lua
-#               requires unconditionally
-#   ghostty  -> writes the theme that ghostty.conf's `theme = noctalia` names
-[theme.templates]
-enable_builtin_templates = true
-builtin_ids = ["btop", "ghostty", "gtk3", "gtk4", "hyprland", "qt", "starship"]
-community_ids = ["claude-code", "brave"]
-
-[theme]
-source = "wallpaper"
-wallpaper_scheme = "m3-content"
-mode = "dark"
-builtin = "Kanagawa"
-community_palette = "Zenbones"
-
-[shell]
-# noctalia's own polkit agent, so nothing separate has to be autostarted.
-polkit_agent = true
-clipboard_enabled = false
-font_family = "Unifont"
-
-[shell.panel]
-transparency_mode = "glass"
-
-[shell.screenshot]
-directory = "~/Pictures/Screenshots"
-save_to_file = true
-copy_to_clipboard = true
-# Freezes the screen while selecting and keeps the pointer out of the capture.
-freeze_screen = true
-show_cursor = false
-remember_last_region = true
-# Every capture opens in satty to annotate; Enter there saves and copies.
-pipe_to_command = true
-pipe_command = "satty -f - -o ~/Pictures/Screenshots/annotated-%Y%m%d_%H%M%S.png --copy-command wl-copy --actions-on-enter save-to-clipboard"
-
-# gaps_out in hypr/files/looknfeel.lua.
 [bar.default]
-layer = "overlay"
-background_opacity = 0.5
-margin_ends = 500
-widget_spacing = 12
-start = ["launcher", "wallpaper", "workspaces", "media"]
-center = ["clock", "weather"]
+background_opacity = 0.0
+capsule = true
+capsule_padding = 12.0
+capsule_radius = 8
+capsule_thickness = 0.8
+center = ["clock"]
 end = [
-    "cpu",
+    "weather",
     "ram",
     "tray",
-    "notifications",
+    "bar",
     "network",
     "bluetooth",
     "volume",
     "brightness",
     "battery",
-    "control-center",
     "session",
 ]
+font_scale = 1
+layer = "top"
+margin_ends = 200
+start = ["launcher", "wallpaper", "workspaces", "cat", "media"]
+thickness = 32
+widget_spacing = 12
 
-[notification]
-position = "top_center"
-background_opacity = 0.3
+[brightness]
+minimum_brightness = 0.02
 
-[nightlight]
+[idle.behavior.lock]
+action = "lock"
 enabled = true
+timeout = 300
 
-# Weather widget lookup.
+[idle.behavior.screen-off]
+action = "screen_off"
+enabled = true
+timeout = 420
+
 [location]
 address = "Kraków"
+
+[nightlight]
+enabled = false
+temperature_night = 2600
+
+[notification]
+background_opacity = 0.75
+position = "top_center"
+
+[plugins]
+enabled = ["noctalia/bongocat", "noctalia/screen_recorder"]
+
+[shell]
+clipboard_enabled = false
+font_family = "Ubuntu Sans"
+lang = "en"
+polkit_agent = true
+
+[shell.animation]
+speed = 2.0
+
+[shell.panel]
+control_center_placement = "floating"
+transparency_mode = "glass"
+wallpaper_placement = "floating"
+
+[shell.screen_corners]
+enabled = true
+
+[shell.screenshot]
+annotate = true
+copy_to_clipboard = true
+directory = "~/Pictures/Screenshots"
+freeze_screen = true
+pipe_command = ""
+pipe_to_command = true
+remember_last_region = false
+save_to_file = true
+show_cursor = false
+
+[theme]
+builtin = "Eldritch"
+community_palette = "Zenbones"
+mode = "dark"
+source = "builtin"
+wallpaper_scheme = "faithful"
+
+[theme.templates]
+builtin_ids = ["btop", "ghostty", "gtk3", "gtk4", "hyprland", "qt", "starship"]
+community_ids = [
+    "claude-code",
+    "spicetify",
+    "brave",
+    "discord",
+    "libreoffice",
+    "obsidian",
+    "heroiclauncher",
+    "prismlauncher",
+    "steam",
+    "fastfetch",
+    "obs",
+    "papirus-icons",
+    "lazygit",
+    "tmux",
+]
+enable_builtin_templates = true
 
 [wallpaper]
 directory = "/home/stshalson/Pictures/Wallpapers"
 transition = ["stripes"]
 
-[idle.behavior.lock]
-timeout = 300
-action = "lock"
-enabled = true
+[weather]
+effects = false
 
-[idle.behavior.screen-off]
-timeout = 420
-action = "screen_off"
-enabled = true
+[widget.cat]
+type = "noctalia/bongocat:cat"
