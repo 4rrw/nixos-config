@@ -26,6 +26,9 @@ h.bind("SUPER + COMMA", "Settings", "noctalia msg settings-toggle")
 h.bind("ALT + TAB", "Window switcher", "noctalia msg window-switcher")
 h.bind("SUPER + ESCAPE", "Power menu", "noctalia msg panel-toggle session")
 
+-- Scale 1, no borders, black wallpaper. Toggles back with the same chord.
+h.bind("SUPER + SHIFT + G", "Gaming mode", os.getenv("HOME") .. "/bin/gaming-mode.sh")
+
 -- Capture. noctalia does the freeze, region overlay, save and clipboard copy
 -- itself; satty is wired up as its pipe_command in config.toml.
 h.bind("PRINT", "Screenshot", "noctalia msg screenshot-region")

@@ -125,7 +125,6 @@
     # network
     networkmanager-openvpn
     # shell
-    zenity # dialog boxes
     starship
     xdg-user-dirs # creates and maintains ~/Pictures and friends
     hyprpicker # the SUPER+PRINT colour picker; noctalia has no equivalent
@@ -142,6 +141,7 @@
     ncspot
     # other
     ffmpeg-full
+    gpu-screen-recorder
     alsa-utils # for debugging audio routing
     # communicators
     vesktop

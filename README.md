@@ -7,15 +7,16 @@ stow. A few exceptions, like tmux, are done the home-manager way to avoid
 manually sourcing and installing plugins. Neovim isn't managed by Nix at all -
 simpler that way, and lazy.nvim makes its own lock files anyway.
 
-Steam launch options:
+XWayland apps aren't scaled explicitly.
+
+For now, start games in Steam with:
 
 ```
-/run/current-system/sw/bin/hypr-gaming gamemoderun mangohud %command%
+gamescope -W 3840 -H 1645 --hdr-enabled --backend wayland -b -r 120 --mangoapp -- gamemoderun %command%
 ```
 
-```
-/run/current-system/sw/bin/hypr-gaming --res 3840x1600@59.96 gamemoderun mangohud %command%
-```
+`--hdr-enabled` and `--mangoapp` is optional
+without `--backend wayland` <https://github.com/ValveSoftware/gamescope/issues/163>
 
 ## TODO
 
@@ -24,6 +25,6 @@ Steam launch options:
 - luks password screen is still ugly
 - bare terminal + hyprland flash briefly on login
 - same flash on shutdown
-- file picker from browser to big
+- bitwarden autostart is wonky, won't close after entering the password
 - [gaming mode] set noctalia bar to autohide on workspace 10
 - add an nh autoclean service
