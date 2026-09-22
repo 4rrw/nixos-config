@@ -1,2 +1,7 @@
 os:
-  edit: "nvim --server $NVIM {{filename}}"
+  # Open files in the *outer* neovim (same window, same tab) instead of
+  # spawning a nested one. See nvim-edit.sh for why this needs a script.
+  # editAtLineAndWait / openDirInEditor are left to lazygit's auto-detected
+  # nvim-remote preset.
+  edit: "lazygit-nvim-edit {{filename}}"
+  editAtLine: "lazygit-nvim-edit {{filename}} {{line}}"
