@@ -31,12 +31,17 @@
     ];
   };
 
-  networking.networkmanager.enable = true;
+  main-user.enable = true;
+  main-user.userName = "stshalson";
 
   time.timeZone = "Europe/Warsaw";
 
-  i18n.defaultLocale = "en_US.UTF-8";
+  networking = {
+    networkmanager.enable = true;
+    firewall.allowedTCPPorts = [ 22 ];
+  };
 
+  i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "pl_PL.UTF-8";
     LC_IDENTIFICATION = "pl_PL.UTF-8";
@@ -49,50 +54,22 @@
     LC_TIME = "pl_PL.UTF-8";
   };
 
-  services.xserver.xkb = {
-    layout = "pl";
-    variant = "";
-  };
-
   console.keyMap = "pl2";
 
-  programs.fish.enable = true;
-
-  # Gives prebuilt dynamic binaries, like nvim-treesitter's parsers, a linker to find.
-  programs.nix-ld.enable = true;
-
   # DOCKER
-  virtualisation.docker.enable = true;
-
-  # BuildKit prunes to about 10 % of the disk by default, and it drops cache mounts before
-  # anything else. The tracker-api worker image caches 21 GB of torch wheels, so the default
-  # deletes them between builds and each build downloads torch again.
-  virtualisation.docker.daemon.settings = {
-    builder.gc = {
-      enabled = true;
-      reservedSpace = "120GB";
-      maxUsedSpace = "180GB";
-      minFreeSpace = "40GB";
+  virtualisation = {
+    docker = {
+      enable = true;
+      daemon.settings = {
+        builder.gc = {
+          enabled = true;
+          reservedSpace = "120GB";
+          maxUsedSpace = "180GB";
+          minFreeSpace = "40GB";
+        };
+      };
     };
   };
-
-  # manylinux Python wheels link these by soname and expect the distro to supply them.
-  # opencv-python needs every one: glib and libGL for the core module, the X11 set for
-  # its bundled Qt platform plugin.
-  # TODO: use things like this in project flake, not system wide
-  programs.nix-ld.libraries = with pkgs; [
-    glib
-    libGL
-    libice
-    libsm
-    libx11
-    libxext
-    libxcb
-    icu
-  ];
-
-  main-user.enable = true;
-  main-user.userName = "stshalson";
 
   nixpkgs.config.allowUnfree = true;
 
@@ -108,8 +85,6 @@
     pre-commit
     gnumake
     claude-code
-    # fancy nix tool
-    nh
     # larp tools
     fastfetch
     btop
@@ -122,6 +97,7 @@
     p7zip
     unzip
     sshfs
+    syncthing
     # network
     networkmanager-openvpn
     # shell
@@ -147,32 +123,78 @@
     vesktop
   ];
 
-  programs.hyprland = {
-    enable = true;
-    withUWSM = true;
-  };
-
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
-  environment.sessionVariables.NH_FLAKE = "/home/stshalson/.config/nixos";
 
-
-  programs.noctalia = {
-    enable = true;
-    recommendedServices.enable = true;
+  programs = {
+    noctalia = {
+      enable = true;
+      recommendedServices.enable = true;
+    };
+    hyprland = {
+      enable = true;
+      withUWSM = true;
+    };
+    nh = {
+      enable = true;
+      clean.enable = true;
+      clean.extraArgs = "--keep-since 14d --keep 6";
+      flake = "/home/stshalson/.config/nixos";
+    };
+    nix-ld = {
+      # Gives prebuilt dynamic binaries, like nvim-treesitter's parsers, a linker to find.
+      # TODO: use things like this in project flake, not system wide
+      enable = true;
+      libraries = with pkgs; [
+        glib
+        libGL
+        libice
+        libsm
+        libx11
+        libxext
+        libxcb
+        icu
+      ];
+    };
+    fish.enable = true;
+    noctalia-greeter.enable = true;
   };
 
-  programs.noctalia-greeter.enable = true;
-
-  # WirePlumber otherwise pins each stream to the device it last played on, so
-  # switching the default output leaves the audio behind.
-  services.pipewire.wireplumber.extraConfig."51-follow-default-sink" = {
-    "wireplumber.settings" = {
-      "node.stream.restore-target" = false;
+  services = {
+    xserver.xkb = {
+      layout = "pl";
+      variant = "";
+    };
+    # WirePlumber otherwise pins each stream to the device it last played on, so
+    # switching the default output leaves the audio behind.
+    pipewire.wireplumber.extraConfig."51-follow-default-sink" = {
+      "wireplumber.settings" = {
+        "node.stream.restore-target" = false;
+      };
+    };
+    gnome.gnome-keyring.enable = true;
+    printing.enable = true;
+    fwupd.enable = true;
+    # Mounts removable media. No automounter on purpose -- click the disk in the
+    # file manager, or `udisksctl mount -b`. gvfs lives in nautilus.nix.
+    udisks2.enable = true;
+    # mDNS, so SMB/NFS hosts turn up in the file manager by name. Opens UDP 5353.
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+    };
+    openssh = {
+      enable = true;
+      settings.PasswordAuthentication = true;
+    };
+    syncthing = {
+        enable = true;
+        group = "users";
+        user = "stshalson";
+        dataDir = "/home/stshalson/Documents";    # Default folder for new synced folders
+        configDir = "/home/stshalson/.config/syncthing";   # Folder for Syncthing's settings and keys
     };
   };
 
-  # ghostty.conf asks for Iosevka Nerd Font Mono; without it ghostty falls back
-  # to proportional DejaVu Sans and every Nerd Font glyph renders as tofu.
   fonts.packages = [ 
     pkgs.nerd-fonts.iosevka
     pkgs.ubuntu-sans
@@ -180,30 +202,14 @@
 
   ];
 
-  # Lets pipewire take realtime priority instead of crackling under load.
-  security.rtkit.enable = true;
-
-  # A Secret Service for Brave's passwords; the PAM line unlocks it at login.
-  services.gnome.gnome-keyring.enable = true;
-  security.pam.services.greetd.enableGnomeKeyring = true;
-
-  services.printing.enable = true;
-  services.fwupd.enable = true;
+  security = {
+    # Lets pipewire take realtime priority instead of crackling under load.
+    rtkit.enable = true;
+    # A Secret Service for Brave's passwords; the PAM line unlocks it at login.
+    pam.services.greetd.enableGnomeKeyring = true;
+  };
   zramSwap.enable = true;
 
-  # Mounts removable media. No automounter on purpose -- click the disk in the
-  # file manager, or `udisksctl mount -b`. gvfs lives in nautilus.nix.
-  services.udisks2.enable = true;
-
-  # mDNS, so SMB/NFS hosts turn up in the file manager by name. Opens UDP 5353.
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-  };
-
-  services.openssh.enable = true;
-  services.openssh.settings.PasswordAuthentication = true;
-  networking.firewall.allowedTCPPorts = [ 22 ];
 
   # Use bitwarden's SSH agent.
   programs.ssh.extraConfig = ''
