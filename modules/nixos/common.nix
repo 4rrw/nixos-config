@@ -11,6 +11,7 @@
     inputs.home-manager.nixosModules.default
     inputs.noctalia.nixosModules.default
     inputs.noctalia-greeter.nixosModules.default
+    inputs.snapmaker-orca.nixosModules.default
   ];
 
   home-manager = {
@@ -73,6 +74,16 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  # Exposes nixpkgs-unstable as `pkgs.unstable`
+  nixpkgs.overlays = [
+    (final: prev: {
+      unstable = import inputs.nixpkgs-unstable {
+        inherit (prev.stdenv.hostPlatform) system;
+        config = prev.config;
+      };
+    })
+  ];
+
   environment.systemPackages = with pkgs; [
     # dev stuff
     rustc
@@ -98,6 +109,9 @@
     unzip
     sshfs
     syncthing
+    losslesscut
+    kdePackages.kdenlive
+    onlyoffice-desktopeditors
     # network
     networkmanager-openvpn
     # shell
@@ -105,6 +119,7 @@
     xdg-user-dirs # creates and maintains ~/Pictures and friends
     hyprpicker # the SUPER+PRINT colour picker; noctalia has no equivalent
     bibata-cursors # only here because a theme has to be a store path; hypr/looknfeel.lua picks it
+    unstable.hyprmod
     # apps
     brave
     bitwarden-desktop
@@ -130,6 +145,7 @@
       enable = true;
       recommendedServices.enable = true;
     };
+    noctalia-greeter.enable = true;
     hyprland = {
       enable = true;
       withUWSM = true;
@@ -156,7 +172,7 @@
       ];
     };
     fish.enable = true;
-    noctalia-greeter.enable = true;
+    snapmaker-orca.enable = true; # NOTE: from custom flake https://github.com/chrstnwhlrt/nix-snapmaker-orca
   };
 
   services = {

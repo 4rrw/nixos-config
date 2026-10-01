@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     # flake-parts.url = "github:hercules-ci/flake-parts";
     noctalia.url = "github:noctalia-dev/noctalia";
     noctalia-greeter.url = "github:noctalia-dev/noctalia-greeter";
@@ -14,6 +15,7 @@
         url = "github:Daaboulex/proton-ge-nix";
         inputs.nixpkgs.follows = "nixpkgs";
     };
+    snapmaker-orca.url = "github:chrstnwhlrt/nix-snapmaker-orca";
   };
 
   outputs =

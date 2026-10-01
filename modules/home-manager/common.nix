@@ -7,11 +7,14 @@
     ./neovim
     ./lazygit
     ./loupe
+    ./mpv
+    ./caveman
     ./ghostty
     ./git
     ./gtk
     ./fish
     ./hypr
+    ./latex
     ./noctalia
     ./tms
     ./webapps

@@ -31,7 +31,7 @@ end
 
 hl.config({
 	decoration = {
-		rounding = 16,
+		rounding = 0,
 
 		-- Must stay below 1 or decoration.blur has nothing to blur through.
 		active_opacity = 0.90,
