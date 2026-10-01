@@ -2,7 +2,7 @@
 background_opacity = 0.0
 capsule = true
 capsule_padding = 12.0
-capsule_radius = 8
+capsule_radius = 0
 capsule_thickness = 0.8
 center = ["clock"]
 end = [
@@ -17,15 +17,18 @@ end = [
     "battery",
     "session",
 ]
-font_scale = 1
+font_scale = 1.1
 layer = "top"
 margin_ends = 200
 start = ["launcher", "wallpaper", "workspaces", "cat", "media"]
 thickness = 32
 widget_spacing = 12
 
+[battery.device."/org/freedesktop/UPower/devices/battery_hidpp_battery_0"]
+warning_threshold = 25
+
 [brightness]
-minimum_brightness = 0.02
+minimum_brightness = 0.05
 
 [idle.behavior.lock]
 action = "lock"
@@ -53,7 +56,8 @@ enabled = ["noctalia/bongocat", "noctalia/screen_recorder"]
 
 [shell]
 clipboard_enabled = false
-font_family = "Ubuntu Sans"
+corner_radius_scale = 0.0
+font_family = "Iosevka NFM"
 lang = "en"
 polkit_agent = true
 
@@ -80,8 +84,8 @@ save_to_file = true
 show_cursor = false
 
 [theme]
-builtin = "Eldritch"
-community_palette = "Zenbones"
+builtin = "Rosé Pine"
+community_palette = "Gruber Darker"
 mode = "dark"
 source = "builtin"
 wallpaper_scheme = "faithful"
