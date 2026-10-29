@@ -152,8 +152,8 @@
     vesktop
     # temporary
     portaudio
+    unstable.winboat # stable's 0.9.0 pins EOL electron 40
   ];
-
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   programs = {
@@ -218,15 +218,15 @@
       settings.PasswordAuthentication = true;
     };
     syncthing = {
-        enable = true;
-        group = "users";
-        user = "stshalson";
-        dataDir = "/home/stshalson/Documents";    # Default folder for new synced folders
-        configDir = "/home/stshalson/.config/syncthing";   # Folder for Syncthing's settings and keys
+      enable = true;
+      group = "users";
+      user = "stshalson";
+      dataDir = "/home/stshalson/Documents"; # Default folder for new synced folders
+      configDir = "/home/stshalson/.config/syncthing"; # Folder for Syncthing's settings and keys
     };
   };
 
-  fonts.packages = [ 
+  fonts.packages = [
     pkgs.nerd-fonts.iosevka
     pkgs.ubuntu-sans
     pkgs.roboto
@@ -240,7 +240,6 @@
     pam.services.greetd.enableGnomeKeyring = true;
   };
   zramSwap.enable = true;
-
 
   # Use bitwarden's SSH agent.
   programs.ssh.extraConfig = ''
