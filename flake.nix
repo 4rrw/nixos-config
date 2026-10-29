@@ -15,7 +15,7 @@
         url = "github:Daaboulex/proton-ge-nix";
         inputs.nixpkgs.follows = "nixpkgs";
     };
-    snapmaker-orca.url = "github:chrstnwhlrt/nix-snapmaker-orca";
+    llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
   outputs =

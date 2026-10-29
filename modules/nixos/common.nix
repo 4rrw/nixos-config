@@ -8,10 +8,10 @@
     ../../modules/nixos/nautilus.nix
     ../../modules/nixos/gaming.nix
     ../../modules/nixos/openvpn.nix
+    ../../modules/nixos/flatpak.nix
     inputs.home-manager.nixosModules.default
     inputs.noctalia.nixosModules.default
     inputs.noctalia-greeter.nixosModules.default
-    inputs.snapmaker-orca.nixosModules.default
   ];
 
   home-manager = {
@@ -26,9 +26,13 @@
       "nix-command"
       "flakes"
     ];
-    extra-substituters = [ "https://noctalia.cachix.org" ];
+    extra-substituters = [
+      "https://noctalia.cachix.org"
+      "https://cache.numtide.com" # llm-agents.nix
+    ];
     extra-trusted-public-keys = [
       "noctalia.cachix.org-1:pCOR47nnMeo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
     ];
   };
 
@@ -95,7 +99,12 @@
     git
     pre-commit
     gnumake
-    claude-code
+    nvtopPackages.full
+    # AI agents from https://github.com/numtide/llm-agents.nix, which tracks
+    # upstream releases daily where nixpkgs lags weeks behind. Not pkgs.* on
+    # purpose -- `nix flake update llm-agents` is what bumps these.
+    inputs.llm-agents.packages.${pkgs.system}.claude-code
+    inputs.llm-agents.packages.${pkgs.system}.pi
     # larp tools
     fastfetch
     btop
@@ -112,13 +121,16 @@
     losslesscut
     kdePackages.kdenlive
     onlyoffice-desktopeditors
+    typora
     # network
     networkmanager-openvpn
     # shell
     starship
     xdg-user-dirs # creates and maintains ~/Pictures and friends
     hyprpicker # the SUPER+PRINT colour picker; noctalia has no equivalent
+    pngquant # to compress screenshots (natively theyre big af)
     bibata-cursors # only here because a theme has to be a store path; hypr/looknfeel.lua picks it
+    slurp # region select for wayland
     unstable.hyprmod
     # apps
     brave
@@ -130,12 +142,16 @@
     spicetify-cli
     spotify
     ncspot
+    inkscape
+    audacity
     # other
     ffmpeg-full
     gpu-screen-recorder
     alsa-utils # for debugging audio routing
     # communicators
     vesktop
+    # temporary
+    portaudio
   ];
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
@@ -172,7 +188,6 @@
       ];
     };
     fish.enable = true;
-    snapmaker-orca.enable = true; # NOTE: from custom flake https://github.com/chrstnwhlrt/nix-snapmaker-orca
   };
 
   services = {

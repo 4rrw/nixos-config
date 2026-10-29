@@ -1,7 +1,7 @@
 # The desktop. Shared config is in modules/nixos/common.nix.
 #   sudo nixos-rebuild switch --flake ~/.config/nixos#konkuter
 
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   imports = [
@@ -19,6 +19,10 @@
   networking.hostName = "konkuter";
 
   home-manager.users."stshalson" = import ./home.nix;
+
+  # fsType "ntfs" makes nixpkgs install ntfs3g, whose mount.ntfs helper would take
+  # over these mounts (fuseblk) instead of the kernel ntfs driver.
+  boot.supportedFilesystems.ntfs = lib.mkForce false;
 
   # Under /media so nautilus lists it; mounts under /mnt are never shown.
   fileSystems."/media/BX500" = {

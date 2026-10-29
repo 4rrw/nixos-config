@@ -77,7 +77,7 @@ annotate = true
 copy_to_clipboard = true
 directory = "~/Pictures/Screenshots"
 freeze_screen = true
-pipe_command = ""
+pipe_command = 'pngquant --force --skip-if-larger --quality=60-80 --output "$NOCTALIA_SCREENSHOT_PATH" "$NOCTALIA_SCREENSHOT_PATH"'
 pipe_to_command = true
 remember_last_region = false
 save_to_file = true
