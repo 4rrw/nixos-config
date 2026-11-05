@@ -12,9 +12,9 @@
     sensibleOnTop = true;
     secureSocket = false;
     plugins = with pkgs.tmuxPlugins; [
+      # Colors come from noctalia's tmux template (see tmux-extra.conf), so no
+      # theme plugin: one would hard-code colors over noctalia's.
       yank
-      gruvbox
-      catppuccin
     ];
     extraConfig = builtins.readFile ./tmux-extra.conf;
   };

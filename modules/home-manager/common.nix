@@ -18,6 +18,7 @@
     ./noctalia
     ./tms
     ./webapps
+    ./lf
   ];
 
   home.username = "stshalson";

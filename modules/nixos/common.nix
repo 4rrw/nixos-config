@@ -122,6 +122,9 @@
     kdePackages.kdenlive
     onlyoffice-desktopeditors
     typora
+    drawio
+    dbeaver-bin
+    obsidian
     # network
     networkmanager-openvpn
     # shell
@@ -132,6 +135,7 @@
     bibata-cursors # only here because a theme has to be a store path; hypr/looknfeel.lua picks it
     slurp # region select for wayland
     unstable.hyprmod
+    mpvpaper
     # apps
     brave
     bitwarden-desktop
