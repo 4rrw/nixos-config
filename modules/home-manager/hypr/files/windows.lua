@@ -57,6 +57,15 @@ hl.window_rule({
 	opaque = true,
 })
 
+-- Extension popouts (Bitwarden etc.) open with their own class,
+-- brave-<32-letter extension id>-Default, so they float while the browser tiles.
+hl.window_rule({
+	match = { class = "^brave-[a-p]{32}-Default$" },
+	float = true,
+	center = true,
+	opaque = true,
+})
+
 -- The file picker every app reaches through the portal. It sets no title at all,
 -- so the class is the only thing to match on, and it asks for 1204x1192 and
 -- tiles, which on the 4K is most of a column.

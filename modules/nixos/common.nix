@@ -100,6 +100,7 @@
     pre-commit
     gnumake
     nvtopPackages.full
+    wl-clipboard
     # AI agents from https://github.com/numtide/llm-agents.nix, which tracks
     # upstream releases daily where nixpkgs lags weeks behind. Not pkgs.* on
     # purpose -- `nix flake update llm-agents` is what bumps these.
@@ -118,7 +119,7 @@
     unzip
     sshfs
     syncthing
-    losslesscut
+    unstable.losslesscut # stable 3.68.0 pins EOL electron 42
     kdePackages.kdenlive
     onlyoffice-desktopeditors
     typora
@@ -148,6 +149,7 @@
     ncspot
     inkscape
     audacity
+    rnote
     # other
     ffmpeg-full
     gpu-screen-recorder

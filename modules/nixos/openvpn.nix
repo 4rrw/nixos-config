@@ -3,8 +3,13 @@
 # The .conf itself (certs/keys) stays out of git, in /etc/openvpn.
 
 {
-  services.openvpn.servers.krtn-1 = {
-    config = "config /etc/openvpn/krtn-1.conf";
+  services.openvpn.servers.numlabs-baselinker = {
+    config = "config /etc/openvpn/numlabs-baselinker.conf";
     autoStart = false;
   };
+  services.openvpn.servers.numlabs-gpu = {
+    config = "config /etc/openvpn/numlabs-gpu.conf";
+    autoStart = false;
+  };
+
 }
